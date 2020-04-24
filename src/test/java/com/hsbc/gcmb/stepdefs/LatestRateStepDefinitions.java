@@ -6,8 +6,7 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java8.En;
 import io.restassured.response.Response;
 
-import static com.hsbc.gcmb.utils.APIPaths.LATEST_RATES_PATH;
-import static com.hsbc.gcmb.utils.APIPaths.LATEST_RATES_PATH_WITH_SYMBOLS;
+import static com.hsbc.gcmb.utils.APIPaths.*;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static java.lang.String.format;
 import static java.lang.String.join;
@@ -30,6 +29,12 @@ public class LatestRateStepDefinitions implements En {
             final String currenciesCommaSeparated = join(",", currencies.asList());
             final String path = format(LATEST_RATES_PATH_WITH_SYMBOLS.getValue(), currenciesCommaSeparated);
             final Response response = context.getRequestSpecification().when().get(path);
+            context.setResponse(response);
+        });
+
+        When("an actor requests the latest rates for base currency {string}", (String baseCurrency) -> {
+            final String path = format(LATEST_RATES_PATH_WITH_BASE_CURRENCY.getValue(), baseCurrency);
+            final Response response = context.getRequestSpecification().get(path);
             context.setResponse(response);
         });
 

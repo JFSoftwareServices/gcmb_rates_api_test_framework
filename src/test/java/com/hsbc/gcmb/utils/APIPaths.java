@@ -5,7 +5,8 @@ package com.hsbc.gcmb.utils;
  */
 public enum APIPaths {
     LATEST_RATES_PATH("/api/latest/"),
-    LATEST_RATES_PATH_WITH_SYMBOLS("/api/latest/?symbols=%s");
+    LATEST_RATES_PATH_WITH_SYMBOLS("/api/latest/?symbols=%s"),
+    LATEST_RATES_PATH_WITH_BASE_CURRENCY("/api/latest/?base=%s");
 
     private String value;
 
