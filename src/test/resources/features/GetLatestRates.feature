@@ -22,3 +22,4 @@ Feature: Get latest date rates
   @TC_003
   Scenario: Actor calls Exchange rates API to get the latest foreign exchange reference rates against a non default base currency.
     When an actor requests the latest rates for base currency "USD"
+    Then the response status code is 200
