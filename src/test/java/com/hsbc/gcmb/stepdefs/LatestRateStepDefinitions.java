@@ -60,6 +60,12 @@ public class LatestRateStepDefinitions implements En {
         Then("the response for a base currency of {string} should be in the correct format", (String baseCurrency) -> {
             validateResponseAgainstSchema(baseCurrency, "ALL", context);
         });
+
+        Then("the response for a base currency of {string} should be in the correct format for:",
+                (String baseCurrency, DataTable currencies) -> {
+                    final String currenciesUnderscoreSeparated = String.join("_", currencies.asList());
+                    validateResponseAgainstSchema(baseCurrency, currenciesUnderscoreSeparated, context);
+                });
     }
 
     /**
