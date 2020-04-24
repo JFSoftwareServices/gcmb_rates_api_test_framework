@@ -37,8 +37,13 @@ The supported tags are:
 Tags such as @TC_001 map to a manual test case that is described in the ManualTestCases.docx.
 
 ## Results
-Cucumber reports are available at {path-to-project}/target/cucumber/index.html
+Cucumber reports are available at {path-to-project}/target/cucumber/index.html. 
 
+There is currently a defect as exposed by test case TC-015, this needs to be discussed with the Product Owner.
+
+The date in the response is supposed to be the current date but it is not. 
+
+ 
 ## Logs
 I am using REST Assured's built in logging capabilities, with a setting that ensures that log statements are only 
 printed out when a test fails.
