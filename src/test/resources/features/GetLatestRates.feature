@@ -13,3 +13,4 @@ Feature: Get latest date rates
   Scenario: Actor calls Exchange rates API to get the latest specific foreign exchange reference rates.
     When an actor requests the latest rates for:
       | USD | GBP |
+    Then the response status code is 200
