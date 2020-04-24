@@ -7,3 +7,4 @@ Feature: Get latest date rates
     Then the response status code is 200
     And the default response for the latest rates should be in the correct format
     And the response base currency is "EUR"
+    And the response date is in a valid format

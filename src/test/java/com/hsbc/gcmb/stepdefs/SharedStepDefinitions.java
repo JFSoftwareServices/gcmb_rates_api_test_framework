@@ -1,10 +1,14 @@
 package com.hsbc.gcmb.stepdefs;
 
+import com.hsbc.gcmb.utils.LocalDateValidator;
 import com.hsbc.gcmb.utils.TestContext;
 import io.cucumber.java8.En;
 import io.restassured.response.ValidatableResponse;
 
+import java.time.format.DateTimeFormatter;
+
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Cucumber creates an instance of this class. This class's package is referenced in glue section of the RunCucumberTest.
@@ -22,5 +26,12 @@ public class SharedStepDefinitions implements En {
 
         Then("the response base currency is {string}", (String baseCurrency) ->
                 context.getValidatableResponse().body("base", equalTo(baseCurrency)));
+
+        Then("the response date is in a valid format", () -> {
+            final String dateAsString = context.getResponse().getBody().jsonPath().get("date");
+            final boolean validDate =
+                    new LocalDateValidator(DateTimeFormatter.ofPattern("yyyy-MM-dd")).isValid(dateAsString);
+            assertTrue("date not valid", validDate);
+        });
     }
 }
