@@ -38,6 +38,15 @@ public class HistoricalRateStepDefinitions implements En {
             context.setResponse(response);
         });
 
+        When("an actor requests historical rates for {string} with base currency {string}", (String date,
+                                                                                             String baseCurrency) -> {
+            final String path = format(HISTORICAL_RATES_PATH_WITH_BASE_CURRENCY.getValue(),
+                    date, baseCurrency);
+            final Response response = context.getRequestSpecification().when()
+                    .get(path);
+            context.setResponse(response);
+        });
+
         Then("the default response for the historical rates for {string} should be in the correct format",
                 (String date) -> validateResponse("EUR", date, "ALL", context));
 
