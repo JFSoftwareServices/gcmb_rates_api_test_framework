@@ -1,14 +1,16 @@
 package com.hsbc.gcmb.stepdefs;
 
 import com.hsbc.gcmb.utils.TestContext;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java8.En;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 import java.io.File;
 
-import static com.hsbc.gcmb.utils.APIPaths.HISTORICAL_RATES_PATH;
+import static com.hsbc.gcmb.utils.APIPaths.*;
 import static java.lang.String.format;
+import static java.lang.String.join;
 import static java.util.Objects.requireNonNull;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -24,6 +26,15 @@ public class HistoricalRateStepDefinitions implements En {
             final String path = format(HISTORICAL_RATES_PATH.getValue(), date);
             final Response response = context.getRequestSpecification().when()
                     .get(path);
+            context.setResponse(response);
+        });
+
+        When("an actor requests historical rates for {string} for currencies:", (String date,
+                                                                                 DataTable currencies) -> {
+
+            final String currenciesCommaSeparated = join(",", currencies.asList());
+            final String path = format(HISTORICAL_RATES_PATH_WITH_SYMBOLS.getValue(), date, currenciesCommaSeparated);
+            Response response = context.getRequestSpecification().when().get(path);
             context.setResponse(response);
         });
 

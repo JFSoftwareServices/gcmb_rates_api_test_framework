@@ -8,7 +8,8 @@ public enum APIPaths {
     LATEST_RATES_PATH_WITH_SYMBOLS("/api/latest/?symbols=%s"),
     LATEST_RATES_PATH_WITH_BASE_CURRENCY("/api/latest/?base=%s"),
     LATEST_RATES_PATH_WITH_BASE_CURRENCY_AND_SYMBOLS("/api/latest/?base=%s&symbols=%s"),
-    HISTORICAL_RATES_PATH("/api/%s");
+    HISTORICAL_RATES_PATH("/api/%s"),
+    HISTORICAL_RATES_PATH_WITH_SYMBOLS("/api/%s?symbols=%s");
 
     private String value;
 
