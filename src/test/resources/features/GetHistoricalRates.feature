@@ -54,3 +54,9 @@ Feature: Get historical rates
     """
     {"error":"There is no data for dates older then 1999-01-04."}
     """
+
+  @TC_014
+  Scenario: Actor calls Exchange rates API to get historical rates with date 1999-01-04.
+    When an actor requests historical rates for "1999-01-04"
+    Then the response status code is 200
+    And the default response for the historical rates for "1999-01-04" should be in the correct format
