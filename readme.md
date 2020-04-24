@@ -30,9 +30,13 @@ GetHistoricalRates.feature.
 GetLatestRates.feature.
 
 The supported tags are: 
-@TC_001, @TC_002.... @TC_014
+@TC_001, @TC_002.... @TC_015
+
 @latest
+
 @historical
+
+@future
 
 Tags such as @TC_001 map to a manual test case that is described in the ManualTestCases.docx.
 
