@@ -26,3 +26,8 @@ Feature: Get latest date rates
     And the response for a base currency of "USD" should be in the correct format
     And the response base currency is "USD"
     And the response date is in a valid format
+
+  @TC_004
+  Scenario: Actor calls Exchange rates API to get the latest specific foreign exchange reference rates against a non default base currency.
+    When an actor requests the latest rates for base currency "USD" for:
+      | GBP |

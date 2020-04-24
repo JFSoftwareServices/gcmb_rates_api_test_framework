@@ -38,6 +38,16 @@ public class LatestRateStepDefinitions implements En {
             context.setResponse(response);
         });
 
+        When("an actor requests the latest rates for base currency {string} for:", (final String baseCurrency,
+                                                                                    final DataTable currencies) -> {
+            final String currenciesCommaSeparated = join(",", currencies.asList());
+            final String path = format(LATEST_RATES_PATH_WITH_BASE_CURRENCY_AND_SYMBOLS.getValue(), baseCurrency,
+                    currenciesCommaSeparated);
+
+            final Response response = context.getRequestSpecification().when().get(path);
+            context.setResponse(response);
+        });
+
         Then("the default response for the latest rates should be in the correct format", () -> {
             validateResponseAgainstSchema("EUR", "ALL", context);
         });
