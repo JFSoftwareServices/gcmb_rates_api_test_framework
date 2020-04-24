@@ -17,3 +17,5 @@ Feature: Get historical rates
   @TC_007
   Scenario: Actor calls Exchange rates API to get historical foreign exchange reference
     When an actor requests historical rates for "2010-01-12" with base currency "USD"
+    Then the response status code is 200
+    And the response for a base currency of "USD" for historical rates for "2010-01-12" for all currencies should be in the correct format
