@@ -8,3 +8,8 @@ Feature: Get latest date rates
     And the default response for the latest rates should be in the correct format
     And the response base currency is "EUR"
     And the response date is in a valid format
+
+  @TC_002
+  Scenario: Actor calls Exchange rates API to get the latest specific foreign exchange reference rates.
+    When an actor requests the latest rates for:
+      | USD | GBP |
