@@ -2,10 +2,15 @@ package com.hsbc.gcmb.stepdefs;
 
 import com.hsbc.gcmb.utils.TestContext;
 import io.cucumber.java8.En;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+
+import java.io.File;
 
 import static com.hsbc.gcmb.utils.APIPaths.HISTORICAL_RATES_PATH;
 import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  * Cucumber creates an instance of this class. This class's package is referenced in glue section of the RunCucumberTest.
@@ -21,5 +26,39 @@ public class HistoricalRateStepDefinitions implements En {
                     .get(path);
             context.setResponse(response);
         });
+
+        Then("the default response for the historical rates for {string} should be in the correct format",
+                (String date) -> validateResponse("EUR", date, "ALL", context));
+    }
+
+    /**
+     * @param baseCurrency the base currency of the request
+     * @param date         the date for which rates are required
+     * @param currencies   the currency symbols for which rates are required in the form "USD,GBP" for example.
+     *                     Or ALL for all currency pairs.
+     * @param context      the TestContext
+     */
+    private void validateResponse(String baseCurrency, String date, String currencies, TestContext context) {
+        // The expected response is stored in a file and the path to that file uses a particular naming convention
+        // For example a file with path "schema/response_2010-01-12_EUR_ALL.json" contains the expected json
+        // response when a request for historical rates for the 2010-01-12 is made for the default base
+        //currency without specifying any currency symbols.
+        File file = expectedJsonResponseFile(baseCurrency, date, currencies);
+        JsonPath jsonPath = new JsonPath(file);
+        context.getValidatableResponse().body("$", equalTo(jsonPath.getMap("")));
+    }
+
+    /**
+     * @param baseCurrency the base currency of the request
+     * @param date         the date for which rates are required
+     * @param currencies   the currency symbols for which rates are required in the form "USD,GBP" for example.
+     *                     Or ALL for all currency pairs.
+     * @return FIle containing the expected pre-defined json response
+     */
+    private File expectedJsonResponseFile(String baseCurrency, String date, String currencies) {
+        ClassLoader classLoader = getClass().getClassLoader();
+        currencies = currencies.replace(",", "_");
+        String file = "responses/response_" + date + "_" + baseCurrency + "_" + currencies + ".json";
+        return new File(requireNonNull(classLoader.getResource(file)).getFile());
     }
 }
