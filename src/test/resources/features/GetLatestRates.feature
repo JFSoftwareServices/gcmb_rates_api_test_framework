@@ -14,3 +14,7 @@ Feature: Get latest date rates
     When an actor requests the latest rates for:
       | USD | GBP |
     Then the response status code is 200
+    And the default response for the latest rates should be in the correct format for:
+      | USD | GBP |
+    And the response base currency is "EUR"
+    And the response date is in a valid format

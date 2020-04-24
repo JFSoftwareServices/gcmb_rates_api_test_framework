@@ -36,6 +36,12 @@ public class LatestRateStepDefinitions implements En {
         Then("the default response for the latest rates should be in the correct format", () -> {
             validateResponseAgainstSchema("EUR", "ALL", context);
         });
+
+        Then("the default response for the latest rates should be in the correct format for:",
+                (DataTable currencies) -> {
+                    final String currenciesUnderscoreSeparated = String.join("_", currencies.asList());
+                    validateResponseAgainstSchema("EUR", currenciesUnderscoreSeparated, context);
+                });
     }
 
     /**
