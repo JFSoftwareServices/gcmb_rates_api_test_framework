@@ -27,6 +27,15 @@ Feature: Get historical rates
     Then the response status code is 200
     And the response for a base currency of "USD" for historical rates for "2010-01-12" with currencies "GBP" should be in the correct format
 
+  @TC_009
+  Scenario: Actor calls Exchange rates API to get historical foreign exchange reference rates, using an invalid date.
+    When an actor requests historical rates for "2020-13-12" with base currency "USD"
+    Then the response status code is 400
+    And the response is:
+    """
+    {"error":"time data '2020-13-12' does not match format '%Y-%m-%d'"}
+    """
+
   @TC_010
   Scenario:  Actor calls Exchange rates API to get historical foreign exchange reference rates, for an unsupported base currency.
     When an actor requests historical rates for "2010-01-12" with base currency "UDD"
