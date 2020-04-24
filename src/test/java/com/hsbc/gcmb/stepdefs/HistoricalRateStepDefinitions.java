@@ -61,6 +61,11 @@ public class HistoricalRateStepDefinitions implements En {
         Then("the default response for the historical rates for {string} should be in the correct format",
                 (String date) -> validateResponse("EUR", date, "ALL", context));
 
+        Then("the response for a base currency of {string} for historical rates for {string} for all " +
+                "currencies should be in the correct format", (String baseCurrency, String date) -> {
+            validateResponse(baseCurrency, date, "ALL", context);
+        });
+
         Then("the default response for the historical rates for {string} with currencies {string} should be " +
                 "in the correct format", (String date, String currencies) -> {
             validateResponse("EUR", date, currencies, context);
