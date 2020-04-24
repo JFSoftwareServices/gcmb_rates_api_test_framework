@@ -47,6 +47,17 @@ public class HistoricalRateStepDefinitions implements En {
             context.setResponse(response);
         });
 
+        When("an actor requests historical rates for {string} with base currency {string} for currencies:",
+                (String pastDate, String baseCurrency, DataTable currencies) -> {
+                    final String currenciesCommaSeparated = join(",", currencies.asList());
+                    final String path = format(HISTORICAL_RATES_PATH_WITH_BASE_CURRENCY_AND_SYMBOLS.getValue(),
+                            pastDate,
+                            baseCurrency,
+                            currenciesCommaSeparated);
+                    final Response response = context.getRequestSpecification().when().get(path);
+                    context.setResponse(response);
+                });
+
         Then("the default response for the historical rates for {string} should be in the correct format",
                 (String date) -> validateResponse("EUR", date, "ALL", context));
 
@@ -55,9 +66,9 @@ public class HistoricalRateStepDefinitions implements En {
             validateResponse("EUR", date, currencies, context);
         });
 
-        Then("the response for a base currency of {string} for historical rates for {string} for all " +
-                "currencies should be in the correct format", (String baseCurrency, String date) -> {
-            validateResponse(baseCurrency, date, "ALL", context);
+        Then("the response for a base currency of {string} for historical rates for {string} with currencies " +
+                "{string} should be in the correct format", (String baseCurrency, String date, String currencies) -> {
+            validateResponse(baseCurrency, date, currencies, context);
         });
     }
 
