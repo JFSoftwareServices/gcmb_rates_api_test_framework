@@ -47,6 +47,9 @@ public class LatestRateStepDefinitions implements En {
                     final String currenciesUnderscoreSeparated = String.join("_", currencies.asList());
                     validateResponseAgainstSchema("EUR", currenciesUnderscoreSeparated, context);
                 });
+        Then("the response for a base currency of {string} should be in the correct format", (String baseCurrency) -> {
+            validateResponseAgainstSchema(baseCurrency, "ALL", context);
+        });
     }
 
     /**
