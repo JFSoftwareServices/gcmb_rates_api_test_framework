@@ -4,6 +4,8 @@ import com.hsbc.gcmb.utils.TestContext;
 import io.cucumber.java8.En;
 import io.restassured.response.ValidatableResponse;
 
+import static org.hamcrest.Matchers.equalTo;
+
 /**
  * Cucumber creates an instance of this class. This class's package is referenced in glue section of the RunCucumberTest.
  *
@@ -17,5 +19,8 @@ public class SharedStepDefinitions implements En {
             final ValidatableResponse validatableResponse = context.getResponse().then().statusCode(expectedStatus);
             context.setValidatableResponse(validatableResponse);
         });
+
+        Then("the response base currency is {string}", (String baseCurrency) ->
+                context.getValidatableResponse().body("base", equalTo(baseCurrency)));
     }
 }
