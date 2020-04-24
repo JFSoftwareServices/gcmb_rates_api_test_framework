@@ -36,3 +36,12 @@ Feature: Get latest date rates
       | GBP |
     And the response base currency is "USD"
     And the response date is in a valid format
+
+  @TC_012
+  Scenario: Actor calls Exchange rates API with an unsupported base currency.
+    When an actor requests the latest rates for base currency "UDD"
+    Then the response status code is 400
+    Then the response is:
+    """
+    {"error":"Base 'UDD' is not supported."}
+    """

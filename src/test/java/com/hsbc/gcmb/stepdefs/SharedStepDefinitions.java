@@ -8,6 +8,7 @@ import io.restassured.response.ValidatableResponse;
 import java.time.format.DateTimeFormatter;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -32,6 +33,11 @@ public class SharedStepDefinitions implements En {
             final boolean validDate =
                     new LocalDateValidator(DateTimeFormatter.ofPattern("yyyy-MM-dd")).isValid(dateAsString);
             assertTrue("date not valid", validDate);
+        });
+
+        Then("the response is:", (String expectedResponse) -> {
+            final String actualResponse = context.getResponse().getBody().asString();
+            assertEquals("", expectedResponse, actualResponse);
         });
     }
 }
